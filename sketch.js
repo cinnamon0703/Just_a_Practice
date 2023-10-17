@@ -1,79 +1,47 @@
-class Circle {
-  constructor() {
-    this.pos = createVector(random(width), random(height)); 
-    this.vel = createVector(random(-10, 10), random(-10, 10)); 
-    this.color = color(random(255), random(255), random(255));
-  }
-
-  update() {
-    this.pos.add(this.vel);
-
-    if (this.pos.x - 25 > width) {
-      this.pos.x = -25;
-    } else if (this.pos.x + 25 < 0) {
-      this.pos.x = width + 25;
-    }
-
-    if (this.pos.y - 25 > height) {
-      this.pos.y = -25;
-    } else if (this.pos.y + 25 < 0) {
-      this.pos.y = height + 25;
-    }
-  }
-
-  display() {
-    fill(this.color);
-    ellipse(this.pos.x, this.pos.y, 50);
-  }
-
-  randomVel() {
-    this.vel = createVector(random(-10, 10), random(-10, 10)); 
-  }
-
-  randomColor() {
-    this.color = color(random(255), random(255), random(255));
-  }
-}
-
-let circle;
-let circles = []; 
-let newCircle;
+let ball, ball2;
 
 function setup() {
-  createCanvas(1200, 1200);
-  circle = new Circle();
+  createCanvas(400, 400);
+
+  ball = new Particle();
+  ball2 = new Particle();
+  ball2.w = 10;
+  ball2.pos.x = 50;
 }
+
 
 function draw() {
   background(220);
-  circle.update();
-  circle.display();
 
- 
-  for (let i = 0; i < circles.length; i++) {
-    circles[i].update();
-    circles[i].display();
-  }
+  // let gravity = createVector(0, 0.3);
+  // ball.addForce(gravity);
+
+  // if(mouseIsPressed) {
+  // let wind = createVector(0.05, 0);
+  // ball.addForce(wind);
+  // } 
+  // else {
+  //   let reversewind = createVector(-0.01, 0);
+  //   ball.addForce(reversewind);
+  // } 
+
+  ball.update();
+  ball.show();
+  ball2.update();
+  ball2.show();
 }
 
 function mouseClicked() {
-  
-  circle.randomVel();
-  circle.randomColor();
-  
-   let amount = random(1, 6);
-  for (let i = 0; i < amount; i++) {
-    newCircle = new Circle();
-    newCircle.randomVel();
-    newCircle.randomColor();
-    circles.push(newCircle);
-  }
-
+  ball.click(mouseX, mouseY);
+  ball2.click(mouseX, mouseY);
+//   let mp = createVector(mouseX, mouseY);
+//   //ball.pos
  
-  for (let i = 0; i < circles.length; i++) {
-    circles[i].randomVel();
-    circles[i].randomColor();
-  }
-   
-  
+//   let shoot =  p5.Vector.sub(ball.pos, mp);
+
+//   if (shoot.mag() < ball.r) {
+//   ball.addForce(shoot);
+//  }
 }
+
+
